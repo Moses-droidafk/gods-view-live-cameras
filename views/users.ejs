@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Users - God's View</title>
+
+    <style>
+
+        body{
+            font-family:Arial, sans-serif;
+            background:#f4f4f4;
+            margin:0;
+        }
+
+        header{
+            background:#111827;
+            color:white;
+            padding:20px;
+            text-align:center;
+        }
+
+        .container{
+            width:90%;
+            margin:30px auto;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        table, th, td{
+            border:1px solid #ddd;
+        }
+
+        th, td{
+            padding:12px;
+            text-align:left;
+        }
+
+        th{
+            background:#2563eb;
+            color:white;
+        }
+
+        .btn{
+            padding:8px;
+            text-decoration:none;
+            color:white;
+            border-radius:5px;
+        }
+
+        .delete{
+            background:#dc2626;
+        }
+
+        .back{
+            display:inline-block;
+            margin-bottom:20px;
+            background:#16a34a;
+            color:white;
+            padding:10px;
+            text-decoration:none;
+            border-radius:6px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>👥 Manage Users</h1>
+
+</header>
+
+<div class="container">
+
+    <a class="back" href="/admin">
+        ← Back to Admin Dashboard
+    </a>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+
+        <% users.forEach(user => { %>
+
+        <tr>
+
+            <td><%= user.id %></td>
+
+            <td><%= user.username %></td>
+
+            <td><%= user.email %></td>
+
+            <td><%= user.role %></td>
+
+            <td>
+
+                <% if(user.role !== 'admin'){ %>
+
+                    <a
+                        class="btn delete"
+                        href="/admin/delete-user/<%= user.id %>">
+
+                        Delete
+
+                    </a>
+
+                <% } else { %>
+
+                    Main Admin
+
+                <% } %>
+
+            </td>
+
+        </tr>
+
+        <% }) %>
+
+    </table>
+
+</div>
+
+</body>
+</html>

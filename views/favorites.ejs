@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Favorites - God's View</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            margin:0;
+            background:#f5f6fa;
+        }
+
+        header{
+            background:#111827;
+            color:white;
+            padding:25px;
+            text-align:center;
+        }
+
+        nav{
+            margin-top:10px;
+        }
+
+        nav a{
+            color:white;
+            margin:0 10px;
+            text-decoration:none;
+        }
+
+        .container{
+            display:grid;
+            grid-template-columns:
+                repeat(auto-fit,minmax(300px,1fr));
+
+            gap:20px;
+            padding:20px;
+        }
+
+        .card{
+            background:white;
+            border-radius:10px;
+            padding:20px;
+            box-shadow:0 2px 5px rgba(0,0,0,.1);
+        }
+
+        .btn{
+            display:inline-block;
+            padding:10px;
+            border-radius:8px;
+            text-decoration:none;
+            color:white;
+            margin-top:10px;
+        }
+
+        .view{
+            background:#2563eb;
+        }
+
+        .remove{
+            background:#dc2626;
+        }
+
+        .empty{
+            text-align:center;
+            margin-top:50px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>❤️ My Favorite Cameras</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/map">Map</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
+</header>
+
+<% if(cameras.length === 0){ %>
+
+    <div class="empty">
+
+        <h2>You have no favorite cameras yet.</h2>
+
+        <p>
+            Go back and save some cameras.
+        </p>
+
+    </div>
+
+<% } %>
+
+<div class="container">
+
+<% cameras.forEach(camera => { %>
+
+    <div class="card">
+
+        <h3><%= camera.name %></h3>
+
+        <p>
+            <strong>Location:</strong>
+            <%= camera.location %>
+        </p>
+
+        <p>
+            <strong>Category:</strong>
+            <%= camera.category %>
+        </p>
+
+        <p>
+            <%= camera.description %>
+        </p>
+
+        <a
+            class="btn view"
+            href="/camera/<%= camera.id %>">
+
+            View Camera
+
+        </a>
+
+        <br>
+
+        <a
+            class="btn remove"
+            href="/remove-favorite/<%= camera.id %>">
+
+            Remove Favorite
+
+        </a>
+
+    </div>
+
+<% }) %>
+
+</div>
+
+</body>
+</html>

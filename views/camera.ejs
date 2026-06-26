@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= camera.name %> - God's View</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+        }
+
+        header{
+
+            background:linear-gradient(
+                135deg,
+                #1e3a8a,
+                #2563eb
+            );
+
+            padding:25px;
+            text-align:center;
+
+        }
+
+        header h1{
+            font-size:36px;
+        }
+
+        .container{
+
+            width:95%;
+            max-width:1400px;
+            margin:30px auto;
+
+            display:grid;
+            grid-template-columns:2fr 1fr;
+            gap:25px;
+
+        }
+
+        .viewer{
+
+            background:#1e293b;
+            border-radius:15px;
+            overflow:hidden;
+            box-shadow:0 5px 20px rgba(0,0,0,.4);
+
+        }
+
+        .viewer-header{
+
+            padding:20px;
+            background:#111827;
+
+        }
+
+        .stream-container{
+
+            width:100%;
+            height:650px;
+            background:black;
+
+        }
+
+        iframe,
+        video{
+
+            width:100%;
+            height:100%;
+            border:none;
+
+        }
+
+        .external-box{
+
+            height:650px;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+
+            padding:30px;
+            text-align:center;
+
+        }
+
+        .external-box a{
+
+            margin-top:20px;
+
+            background:#2563eb;
+            color:white;
+
+            padding:15px 25px;
+
+            text-decoration:none;
+            border-radius:10px;
+
+        }
+
+        .sidebar{
+
+            background:#1e293b;
+            border-radius:15px;
+            padding:25px;
+
+            box-shadow:0 5px 20px rgba(0,0,0,.4);
+
+        }
+
+        .sidebar h2{
+            margin-bottom:20px;
+        }
+
+        .info{
+            margin-bottom:20px;
+        }
+
+        .status{
+
+            display:inline-block;
+
+            padding:8px 15px;
+
+            border-radius:25px;
+
+            margin-top:10px;
+
+        }
+
+        .online{
+            background:#16a34a;
+        }
+
+        .offline{
+            background:#dc2626;
+        }
+
+        .unknown{
+            background:#64748b;
+        }
+
+        .buttons{
+
+            display:flex;
+            flex-direction:column;
+            gap:15px;
+            margin-top:30px;
+
+        }
+
+        .buttons a{
+
+            text-decoration:none;
+            text-align:center;
+
+            color:white;
+
+            padding:14px;
+
+            border-radius:10px;
+
+        }
+
+        .home-btn{
+            background:#2563eb;
+        }
+
+        .map-btn{
+            background:#0891b2;
+        }
+
+        .fav-btn{
+            background:#db2777;
+        }
+
+        footer{
+
+            margin-top:40px;
+            text-align:center;
+
+            padding:25px;
+
+            background:#020617;
+            color:#94a3b8;
+
+        }
+
+        @media(max-width:900px){
+
+            .container{
+                grid-template-columns:1fr;
+            }
+
+            .stream-container,
+            .external-box{
+                height:400px;
+            }
+
+            header h1{
+                font-size:28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🎥 <%= camera.name %></h1>
+
+</header>
+
+<div class="container">
+
+    <div class="viewer">
+
+        <div class="viewer-header">
+
+            <h2>Live Camera Feed</h2>
+
+        </div>
+
+        <div class="stream-container">
+
+            <% if(mode === "iframe"){ %>
+
+                <iframe
+                    src="<%= camera.stream_url %>"
+                    allowfullscreen>
+                </iframe>
+
+            <% } else if(mode === "video"){ %>
+
+                <video controls autoplay>
+
+                    <source
+                        src="<%= camera.stream_url %>"
+                        type="application/x-mpegURL">
+
+                </video>
+
+            <% } else { %>
+
+                <div class="external-box">
+
+                    <h2>
+
+                        This stream is hosted externally
+
+                    </h2>
+
+                    <p>
+
+                        Click below to open the live camera.
+
+                    </p>
+
+                    <a
+                        href="<%= camera.stream_url %>"
+                        target="_blank">
+
+                        Open Live Camera
+
+                    </a>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+    <div class="sidebar">
+
+        <h2>📋 Camera Details</h2>
+
+        <div class="info">
+
+            <strong>Location:</strong><br>
+            <%= camera.location %>
+
+        </div>
+
+        <div class="info">
+
+            <strong>Category:</strong><br>
+            <%= camera.category %>
+
+        </div>
+
+        <div class="info">
+
+            <strong>Source:</strong><br>
+            <%= camera.source %>
+
+        </div>
+
+        <div class="info">
+
+            <strong>Description:</strong><br><br>
+
+            <%= camera.description %>
+
+        </div>
+
+        <div class="status <%= camera.status %>">
+
+            <%= camera.status || 'unknown' %>
+
+        </div>
+
+        <div class="buttons">
+
+            <a
+                class="fav-btn"
+                href="/add-favorite/<%= camera.id %>">
+
+                ❤️ Add to Favorites
+
+            </a>
+
+            <a
+                class="map-btn"
+                href="/map">
+
+                🗺️ View on Map
+
+            </a>
+
+            <a
+                class="home-btn"
+                href="/">
+
+                🏠 Back Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    God's View © 2026 | Live Cameras by Blogamusa
+
+</footer>
+
+</body>
+</html>

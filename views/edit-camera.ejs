@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Camera - God's View</title>
+
+    <style>
+
+        body{
+            font-family:Arial,sans-serif;
+            background:#111827;
+            color:white;
+            margin:0;
+        }
+
+        .container{
+            width:60%;
+            margin:40px auto;
+            background:#1f2937;
+            padding:30px;
+            border-radius:12px;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        input, textarea{
+
+            width:100%;
+            padding:12px;
+            margin-top:10px;
+            margin-bottom:20px;
+            border:none;
+            border-radius:8px;
+            box-sizing:border-box;
+
+        }
+
+        button{
+
+            width:100%;
+            padding:14px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+        a{
+            color:#60a5fa;
+            text-decoration:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>✏️ Edit Camera</h1>
+
+    <p>
+        <a href="/admin">← Back to Dashboard</a>
+    </p>
+
+    <form
+        method="POST"
+        action="/admin/edit-camera/<%= camera.id %>">
+
+        <input
+            type="text"
+            name="name"
+            value="<%= camera.name %>"
+            required>
+
+        <input
+            type="text"
+            name="location"
+            value="<%= camera.location %>"
+            required>
+
+        <textarea
+            name="description"><%= camera.description %></textarea>
+
+        <input
+            type="text"
+            name="category"
+            value="<%= camera.category %>">
+
+        <input
+            type="text"
+            name="stream_url"
+            value="<%= camera.stream_url %>">
+
+        <input
+            type="text"
+            name="source"
+            value="<%= camera.source %>">
+
+        <input
+            type="text"
+            name="camera_type"
+            value="<%= camera.camera_type %>">
+
+        <input
+            type="number"
+            step="any"
+            name="latitude"
+            value="<%= camera.latitude %>">
+
+        <input
+            type="number"
+            step="any"
+            name="longitude"
+            value="<%= camera.longitude %>">
+
+        <button type="submit">
+
+            Save Changes
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

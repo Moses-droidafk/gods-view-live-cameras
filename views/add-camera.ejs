@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Camera - God's View</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f4f4f4;
+        }
+
+        .container{
+            width:600px;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+        }
+
+        input, textarea{
+            width:100%;
+            padding:12px;
+            margin-bottom:15px;
+            box-sizing:border-box;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Add New Camera</h2>
+
+    <form method="POST" action="/admin/add-camera">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Camera Name"
+            required
+        >
+
+        <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            required
+        >
+
+        <textarea
+            name="description"
+            placeholder="Description"></textarea>
+
+        <input
+            type="text"
+            name="category"
+            placeholder="Category"
+        >
+
+        <input
+            type="text"
+            name="stream_url"
+            placeholder="Stream URL"
+        >
+
+        <input
+            type="text"
+            name="source"
+            placeholder="Source"
+        >
+
+        <input
+            type="text"
+            name="camera_type"
+            placeholder="Camera Type"
+        >
+
+        <input
+            type="number"
+            step="any"
+            name="latitude"
+            placeholder="Latitude"
+        >
+
+        <input
+            type="number"
+            step="any"
+            name="longitude"
+            placeholder="Longitude"
+        >
+
+        <button type="submit">
+
+            Add Camera
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>God's View - Live Cameras by Blogamusa</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+        }
+
+        header{
+
+            background:linear-gradient(
+                135deg,
+                #1e3a8a,
+                #2563eb
+            );
+
+            padding:30px;
+            text-align:center;
+            box-shadow:0 4px 15px rgba(0,0,0,.3);
+
+        }
+
+        header h1{
+            font-size:42px;
+            margin-bottom:10px;
+        }
+
+        header p{
+            color:#cbd5e1;
+        }
+
+        nav{
+
+            margin-top:20px;
+
+        }
+
+        nav a{
+
+            color:white;
+            text-decoration:none;
+            margin:0 10px;
+            background:rgba(255,255,255,.1);
+            padding:10px 15px;
+            border-radius:8px;
+
+        }
+
+        nav a:hover{
+            background:rgba(255,255,255,.2);
+        }
+
+        .search-box{
+
+            width:90%;
+            max-width:700px;
+            margin:30px auto;
+
+        }
+
+        .search-box form{
+            display:flex;
+        }
+
+        .search-box input{
+
+            flex:1;
+            padding:15px;
+            border:none;
+            border-radius:10px 0 0 10px;
+            font-size:16px;
+
+        }
+
+        .search-box button{
+
+            padding:15px 25px;
+            border:none;
+            background:#2563eb;
+            color:white;
+            border-radius:0 10px 10px 0;
+            cursor:pointer;
+
+        }
+
+        .camera-grid{
+
+            width:95%;
+            margin:auto;
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(300px,1fr));
+
+            gap:25px;
+
+            margin-bottom:50px;
+
+        }
+
+        .card{
+
+            background:#1e293b;
+            border-radius:15px;
+            overflow:hidden;
+
+            transition:.3s;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.3);
+
+        }
+
+        .card:hover{
+
+            transform:translateY(-8px);
+
+            box-shadow:
+            0 10px 25px rgba(37,99,235,.5);
+
+        }
+
+        .card-header{
+
+            background:
+            linear-gradient(
+                135deg,
+                #2563eb,
+                #0ea5e9
+            );
+
+            padding:20px;
+
+        }
+
+        .card-body{
+            padding:20px;
+        }
+
+        .status{
+
+            display:inline-block;
+
+            padding:6px 12px;
+
+            border-radius:30px;
+
+            margin-top:10px;
+
+        }
+
+        .online{
+            background:#16a34a;
+        }
+
+        .offline{
+            background:#dc2626;
+        }
+
+        .unknown{
+            background:#64748b;
+        }
+
+        .buttons{
+
+            margin-top:20px;
+
+            display:flex;
+
+            gap:10px;
+        }
+
+        .buttons a{
+
+            flex:1;
+
+            text-align:center;
+
+            padding:10px;
+
+            text-decoration:none;
+
+            color:white;
+
+            border-radius:8px;
+
+        }
+
+        .view-btn{
+            background:#2563eb;
+        }
+
+        .fav-btn{
+            background:#db2777;
+        }
+
+        footer{
+
+            text-align:center;
+            padding:30px;
+            background:#020617;
+            color:#94a3b8;
+
+        }
+
+        @media(max-width:600px){
+
+            header h1{
+                font-size:30px;
+            }
+
+            nav a{
+                display:block;
+                margin:8px 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🌍 God's View</h1>
+
+    <p>
+        Live Cameras by Blogamusa
+    </p>
+
+    <nav>
+
+        <a href="/">Home</a>
+
+        <a href="/map">Map</a>
+
+        <a href="/favorites">Favorites</a>
+
+        <% if(user && user.role === 'admin'){ %>
+
+            <a href="/admin">
+                Admin
+            </a>
+
+        <% } %>
+
+        <a href="/logout">Logout</a>
+
+    </nav>
+
+</header>
+
+<div class="search-box">
+
+    <form method="GET" action="/">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search cameras, cities or categories..."
+            value="<%= search %>"
+        >
+
+        <button type="submit">
+
+            Search
+
+        </button>
+
+    </form>
+
+</div>
+
+<div class="camera-grid">
+
+    <% cameras.forEach(camera => { %>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2><%= camera.name %></h2>
+
+            </div>
+
+            <div class="card-body">
+
+                <p>
+                    📍 <%= camera.location %>
+                </p>
+
+                <br>
+
+                <p>
+                    <%= camera.description %>
+                </p>
+
+                <br>
+
+                <p>
+                    Category:
+                    <strong>
+                        <%= camera.category %>
+                    </strong>
+                </p>
+
+                <div class="status <%= camera.status %>">
+
+                    <%= camera.status || 'unknown' %>
+
+                </div>
+
+                <div class="buttons">
+
+                    <a
+                        class="view-btn"
+                        href="/camera/<%= camera.id %>">
+
+                        View
+
+                    </a>
+
+                    <a
+                        class="fav-btn"
+                        href="/add-favorite/<%= camera.id %>">
+
+                        ❤️ Favorite
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+</div>
+
+<footer>
+
+    God's View © 2026 | Developed by Blogamusa
+
+</footer>
+
+</body>
+</html>
