@@ -26,6 +26,12 @@ app.set("view engine", "ejs");
 // DATABASE
 // ======================
 
+console.log("HOST:", process.env.DB_HOST);
+console.log("PORT:", process.env.DB_PORT);
+console.log("USER:", process.env.DB_USER);
+console.log("DATABASE:", process.env.DB_NAME);
+console.log("PASSWORD LENGTH:", process.env.DB_PASSWORD ? process.env.DB_PASSWORD.length : 0);
+
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
